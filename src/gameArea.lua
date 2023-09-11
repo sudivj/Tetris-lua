@@ -6,7 +6,7 @@ gameArea.area = {}
 gameArea.areaPrevious = {}
 gameArea.func = {}
 
-filledLines = {}
+rowCount = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 emptyLine = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 function gameArea.func.setupArea()
@@ -41,11 +41,16 @@ function gameArea.func.drawArea()
         for x = 1, WIDTH do
             if gameArea.area[y][x] ~= 0 then
                 local sprite = love.graphics.newImage(blockColours[gameArea.area[y][x] + 1])
-                love.graphics.draw(sprite, ((x - 1) * BLOCKSIZE), ((y - 1) * BLOCKSIZE), 0, 0.5)
+                love.graphics.draw(love.graphics.newImage(blockColours[gameArea.area[y][x] + 1]), ((x - 1) * BLOCKSIZE), ((y - 1) * BLOCKSIZE), 0, 0.5)
                 blocksFilled = blocksFilled + 1
             end
+
             love.graphics.print(gameArea.area[y][x], ((x - 1) * BLOCKSIZE), ((y - 1) * BLOCKSIZE))
+
+            rowCount[y] = blocksFilled
         end
+
+        love.graphics.print(rowCount[y], 335, ((y - 1) * BLOCKSIZE))
     end
 end
 

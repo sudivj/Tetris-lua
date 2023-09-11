@@ -11,6 +11,7 @@ function tetras.func.load()
 
     blockPositionX = 4
     blockPositionY = 1
+    preX, preY = blockPositionX, blockPositionY
 
     blockWidth = shapeDimensionsDetails[block][Orientation][1]
     blockHeight = shapeDimensionsDetails[block][Orientation][2]
@@ -40,12 +41,18 @@ function tetras.func.draw()
     for y = 0, blockHeight - 1 do
         for x = 0, blockWidth - 1 do
             if shapeData[block][Orientation][y + 1][x + 1] == 1 then
-                love.graphics.draw(blockSprite, (blockPositionX + x - 1) * BLOCKSIZE, (blockPositionY + y - 1) * BLOCKSIZE, 0, 0.5)                
+                love.graphics.draw(love.graphics.newImage(blockColours[block + 1]), (blockPositionX + x - 1) * BLOCKSIZE, (blockPositionY + y - 1) * BLOCKSIZE, 0, 0.5)                
             end
         end
     end
 
     gameArea.func.drawArea()
+
+    for row = 1, HEIGHT do
+        if rowCount[row] == WIDTH then
+            gameArea.func.removeLine(row)
+        end
+    end
 
     -- For Debugging purposes --
 
@@ -63,6 +70,8 @@ function tetras.func.selectBlock()
 
     blockPositionY = 1
     blockPositionX = 4
+
+    preX, preY = blockPositionX, blockPositionY
 
     blockWidth = shapeDimensionsDetails[block][Orientation][1]
     blockHeight = shapeDimensionsDetails[block][Orientation][2]
@@ -103,7 +112,9 @@ function tetras.func.fall(forceFall, dt)
         deltaTmp = deltaTmp + (dt * gravity)
 
         if delta < deltaTmp then
-            tetras.func.fallCollision()
+            if tetras.func.fallCollision() then
+                return
+            end
 
             delta = math.floor(deltaTmp)
             
@@ -127,6 +138,7 @@ function tetras.func.fallCollision()
     if blockPositionY + blockHeight > HEIGHT then
         isFalling = false
         tetras.func.newShape()
+        return true 
     else
         local numCollitions = 0
         for col = 0, blockHeight - 1 do
@@ -141,8 +153,12 @@ function tetras.func.fallCollision()
         if numCollitions > 0 then
             isFalling = false
             tetras.func.newShape()
+
+            return true
         end
     end
+
+    return false
 end
 
 -- New Block -- 
@@ -155,7 +171,7 @@ function tetras.func.newShape()
 
     tetras.func.selectBlock()
 
-    blockSprite = love.graphics.newImage(blockColours[block + 1])
+    --blockSprite = love.graphics.newImage(blockColours[block + 1])
     
     isFalling = true
 end
