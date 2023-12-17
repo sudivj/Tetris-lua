@@ -5,6 +5,9 @@ WIDTH = 10
 HEIGHT = 20
 
 function love.load()
+    FONT = love.graphics.setNewFont("fonts/Monocraft.otf", 32)
+    FONT:setFilter("nearest", "nearest")
+
     game.load()
 end
 

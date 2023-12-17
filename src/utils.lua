@@ -1,7 +1,14 @@
-function tickGame()
-    ticks = round(love.timer.getFPS())
-    -- love.timer.sleep(1)
-    return ticks
+ticks = 0
+
+function tickGame(gravity)
+    ticks = ticks + 1
+    love.graphics.print(ticks, 0, 0, 0, 0.5, 0.5)
+    if ticks > gravity then
+        ticks = 0
+        return 1
+    else 
+        return 0
+    end
 end
 
 function round(num, idp) -- Rounding a number| Code from:- https://love2d.org/forums/memberlist.php?mode=viewprofile&u=103181
