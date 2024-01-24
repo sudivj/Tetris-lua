@@ -1,0 +1,6 @@
+main.lua
+conf.lua
+src/
+sprites/
+music/
+fonts/

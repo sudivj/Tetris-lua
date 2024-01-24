@@ -2,7 +2,7 @@ ticks = 0
 
 function tickGame(gravity)
     ticks = ticks + 1
-    love.graphics.print(ticks, 0, 0, 0, 0.5, 0.5)
+    --love.graphics.print(ticks, 0, 0, 0, 0.5, 0.5)
     if ticks > gravity then
         ticks = 0
         return 1

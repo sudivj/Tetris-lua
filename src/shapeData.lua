@@ -1,15 +1,22 @@
+require ("src/home")
+
 ORIENTATIONS = 4 --Number of orientations per tetra
 CELLS = 4 --Number of cells
 CELLSIZE = 32 --Cell size
 
+function return_colour(colour)
+    tmp = ("sprites/" .. home.settings.theme .. "/" .. CELLCOLOUR[colour])
+    return tmp
+end
+
 CELLCOLOUR = {
-    "sprites/blue_b.png",
-    "sprites/darkblue_b.png",
-    "sprites/orange_b.png",
-    "sprites/yellow_b.png",
-    "sprites/green_b.png",
-    "sprites/purple_b.png",
-    "sprites/red_b.png"
+    "blue_b.png",
+    "darkblue_b.png",
+    "orange_b.png",
+    "yellow_b.png",
+    "green_b.png",
+    "purple_b.png",
+    "red_b.png"
 }
 
 TETRAMINO = {
