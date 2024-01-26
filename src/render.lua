@@ -9,6 +9,7 @@ tetra.gravity = 30
 time = 0
 
 function game.load()
+    print_to_log("=> Game loaded")
     load_board()
     select_block()
 end
@@ -79,6 +80,7 @@ function select_block()
     next_orientation = ((tetra.orientation + 1) % 4) + 1
     tetra.row = 1
     tetra.col = 4
+    print_to_log("   > Block selected: " .. tetra.current)
 end
 
 function tetra_falling()
@@ -90,8 +92,8 @@ end
 function check_falling_tetra(orientation)
     local cell = TETRAMINO[tetra.current][orientation][4]
     if (tetra.row) + (cell[1] + 1) > HEIGHT or check_block_collision() then
+        add_tetra(tetra)
         select_block()
-        add_tetra(tetra.prev)
         return false
     else
         return true
