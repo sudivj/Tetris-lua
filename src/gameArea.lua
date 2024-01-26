@@ -2,6 +2,7 @@ require("src/shapeData")
 require("src/scores")
 
 function load_board()
+    print_to_log("   > Loading game area")
     bool_to_number = {[true] = 1, [false] = 0}
 
     ROW_SUM = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
@@ -43,7 +44,8 @@ end
 
 function clear_line(line)
     AREA[line] = EMPTYLINE
-
+    print_to_log("   > Line cleared: " .. line)
+    print_to_log("   > Score: " .. SCORE)
     while line > 1 do
         AREA[line] = AREA[line - 1]
         line = line - 1
@@ -51,10 +53,12 @@ function clear_line(line)
 end
 
 function add_tetra(t)
+    print_to_log("   > Block placed at x: " .. t.col .. " y: " .. t.row)
     for i = 1, CELLS do
-        local cell = TETRAMINO[t.type][t.orientation][i]
+        local cell = TETRAMINO[t.current][t.orientation][i]
         if t.col + cell[2] < 1 then GAMESTATE = false end
-        AREA[t.row + cell[1]][t.col + cell[2]] = t.type
+        AREA[t.row + cell[1]][t.col + cell[2]] = t.current
+        print_to_log("    |- > Cell placed at x: " .. t.col + cell[2] .. " y: " .. t.row + cell[1])
     end
 
     get_sum_of_lines()
@@ -136,6 +140,8 @@ function check_game_state()
         end
         SCORE = 0
         GAMESTATE = false
+        print_to_log("   > Game over")
+        print_to_log("=> Menu loaded")
     end
 end
 
